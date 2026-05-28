@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - PetGalaxy{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-lg-6 mb-4 mb-lg-0 text-center">
+            <i class="fa-solid fa-earth-americas text-neon-blue" style="font-size: 10rem; filter: drop-shadow(0 0 20px var(--neon-blue));"></i>
+            <i class="fa-solid fa-paw text-neon-cyan position-absolute" style="font-size: 3rem; margin-top: 5rem; margin-left: -2rem;"></i>
+        </div>
+        <div class="col-lg-6">
+            <h2 class="fw-bold text-white mb-4">Welcome to <span class="text-neon-cyan">PetGalaxy</span></h2>
+            <p class="text-muted mb-3" style="line-height: 1.8;">
+                PetGalaxy is your ultimate universe for everything pet-related. Founded with a deep love for all animals, our mission is to provide premium quality products that ensure the happiness, health, and well-being of your furry, feathered, and finned friends.
+            </p>
+            <p class="text-muted mb-4" style="line-height: 1.8;">
+                Whether you have a playful pup, a curious cat, a chirpy bird, or a tranquil fish, we have carefully curated a galaxy of products to meet their specific needs. From nutritious food and comfy bedding to engaging toys and essential accessories, we've got you covered.
+            </p>
+            <div class="d-flex gap-4 mt-4">
+                <div class="text-center">
+                    <h3 class="text-neon-purple fw-bold mb-1">5+</h3>
+                    <span class="text-white small">Pet Categories</span>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-neon-cyan fw-bold mb-1">100%</h3>
+                    <span class="text-white small">Quality Guarantee</span>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-neon-blue fw-bold mb-1">24/7</h3>
+                    <span class="text-white small">Customer Support</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - PetGalaxy{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="fw-bold mb-4">Secure <span class="text-neon-purple">Checkout</span></h2>
+
+    <div class="row g-5">
+        <div class="col-lg-7">
+            <div class="card bg-transparent border-secondary border-opacity-25 p-4 shadow-sm">
+                <h4 class="fw-bold mb-4 text-white">Shipping Address</h4>
+                {% if addresses %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        {% for address in addresses %}
+                        <div class="form-check mb-3 p-3 rounded border border-secondary border-opacity-25 hover-bg-light">
+                            <input class="form-check-input ms-1 mt-2" type="radio" name="address" id="addr_{{ address.id }}" value="{{ address.id }}" {% if forloop.first %}checked{% endif %}>
+                            <label class="form-check-label ms-3 w-100" for="addr_{{ address.id }}" style="cursor: pointer;">
+                                <div class="fw-bold text-white">{{ address.full_name }}</div>
+                                <div class="text-muted small">{{ address.address_line_1 }}</div>
+                                {% if address.address_line_2 %}<div class="text-muted small">{{ address.address_line_2 }}</div>{% endif %}
+                                <div class="text-muted small">{{ address.city }}, {{ address.state }} - {{ address.pincode }}</div>
+                                <div class="text-neon-cyan small mt-1"><i class="fa-solid fa-phone me-1"></i> {{ address.phone_number }}</div>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 w-100">Place Order</button>
+                </form>
+                {% else %}
+                <div class="alert alert-warning">
+                    You don't have any saved addresses. Please add an address to continue.
+                </div>
+                <a href="{% url 'address_list' %}" class="btn btn-outline-primary rounded-pill">Add New Address</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card bg-transparent border-secondary border-opacity-25 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4 text-white">Order Items</h4>
+                    <ul class="list-group list-group-flush bg-transparent mb-4">
+                        {% for item in cart %}
+                        <li class="list-group-item bg-transparent border-secondary border-opacity-25 px-0 d-flex justify-content-between align-items-center text-white">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-secondary rounded-pill me-3">{{ item.quantity }}</span>
+                                {{ item.product.name|truncatechars:30 }}
+                            </div>
+                            <span class="text-neon-cyan">₹{{ item.total_price }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <hr class="border-secondary border-opacity-50">
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <h5 class="fw-bold text-white mb-0">Total Amount</h5>
+                        <h4 class="fw-bold text-neon-blue mb-0">₹{{ cart.get_total_price }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-bg-light:hover { background: rgba(255,255,255,0.05); }
+    .form-check-input:checked { background-color: var(--neon-purple); border-color: var(--neon-purple); }
+</style>
+{% endblock %}

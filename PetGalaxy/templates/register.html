@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register - PetGalaxy{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0 p-4" style="background: rgba(15, 12, 41, 0.8);">
+                <div class="text-center mb-4">
+                    <i class="fa-solid fa-paw fs-1 text-neon-cyan mb-2"></i>
+                    <h2 class="fw-bold text-white">Create Account</h2>
+                    <p class="text-muted">Join PetGalaxy today!</p>
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger small mt-1">
+                            {{ field.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    
+                    <button type="submit" class="btn btn-primary w-100 rounded-pill mt-3 py-2 fw-bold">Sign Up</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted mb-0">Already have an account? <a href="{% url 'login' %}" class="text-neon-blue text-decoration-none fw-bold">Log In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

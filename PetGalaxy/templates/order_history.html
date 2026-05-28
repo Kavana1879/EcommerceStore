@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Order History - PetGalaxy{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Your <span class="text-neon-purple">Orders</span></h2>
+        <a href="{% url 'profile' %}" class="btn btn-outline-light btn-sm rounded-pill"><i class="fa-solid fa-user me-2"></i>Back to Profile</a>
+    </div>
+
+    {% if orders %}
+    <div class="row g-4">
+        {% for order in orders %}
+        <div class="col-12">
+            <div class="card bg-transparent border-secondary border-opacity-25 shadow-sm">
+                <div class="card-header bg-dark bg-opacity-50 border-bottom border-secondary border-opacity-25 d-flex justify-content-between align-items-center py-3">
+                    <div>
+                        <span class="text-muted small d-block">Order Placed</span>
+                        <span class="fw-bold text-white">{{ order.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    <div>
+                        <span class="text-muted small d-block">Total Amount</span>
+                        <span class="fw-bold text-neon-blue">₹{{ order.total_amount }}</span>
+                    </div>
+                    <div>
+                        <span class="text-muted small d-block">Order Number</span>
+                        <span class="fw-bold text-white">#{{ order.id }}</span>
+                    </div>
+                    <div>
+                        <span class="badge {% if order.status == 'Delivered' %}bg-success{% elif order.status == 'Cancelled' %}bg-danger{% else %}bg-info{% endif %} rounded-pill px-3 py-2">
+                            {{ order.status }}
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h6 class="fw-bold text-white mb-3">Items:</h6>
+                            <ul class="list-unstyled mb-0">
+                                {% for item in order.items.all %}
+                                <li class="d-flex align-items-center mb-2">
+                                    <span class="badge bg-secondary rounded-pill me-2">{{ item.quantity }}x</span>
+                                    <a href="{% url 'product_detail' item.product.id %}" class="text-white text-decoration-none hover-neon">{{ item.product.name }}</a>
+                                    <span class="ms-auto text-muted small">₹{{ item.price }} each</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-md-4 border-start border-secondary border-opacity-25 ps-4">
+                            <h6 class="fw-bold text-white mb-2">Shipping Address:</h6>
+                            <p class="text-muted small mb-0">{{ order.shipping_address }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info bg-transparent border-info text-white text-center py-5">
+        <i class="fa-solid fa-box-open fs-1 mb-3 text-neon-blue"></i>
+        <h4>You haven't placed any orders yet.</h4>
+        <a href="{% url 'home' %}" class="btn btn-primary rounded-pill mt-3 px-4">Start Shopping</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
