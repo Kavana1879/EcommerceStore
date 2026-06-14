@@ -1,4 +1,4 @@
-# CodeAlpha_EcommerceStore
+# EcommerceStore
 # PetGalaxy - Online Pet Store
 
 A complete full-stack e-commerce website for a pet store, built with Django, Bootstrap 5, and SQLite.
